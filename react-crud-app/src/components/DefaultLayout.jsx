@@ -10,7 +10,7 @@ export default function DefaultLayout() {
 
     return (
         <div>
-            {user}
+            {user.name}
             DefaultLayout
             <Outlet />
         </div>
