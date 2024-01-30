@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-sidebar {
+    background: theme("colors.violet.700");
+}
+.nav-item:hover {
+    background: theme("colors.violet.900");
+}
