@@ -9,7 +9,7 @@ const StateContext = createContext({
 
 export default function ContextProvider({ children }) {
     const [user, setUser] = useState({});
-    const [token, _setToken] = useState(234);
+    const [token, _setToken] = useState(null);
 
     const setToken = (token) => {
         _setToken(token);
