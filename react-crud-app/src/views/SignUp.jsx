@@ -1,9 +1,37 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import api from "api";
+import { useStateContext } from "../contexts/ContextProvider";
 
 export default function SignUp() {
+    const { setUser, setToken } = useStateContext();
+
+    const nameRef = useRef("");
+    const emailRef = useRef("");
+    const passwordRef = useRef("");
+    const confirmpasswordRef = useRef("");
+
     const onSubmit = (ev) => {
+        const payload = {
+            name: nameRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+        };
+
+        api.post("/signup", payload)
+            .then(({ data }) => {
+                setUser(data.user);
+                setToken(data.token);
+            })
+            .catch((err) => {
+                const response = err.response;
+                if (response && response.status === 441) {
+                    console.log(response.data.errors);
+                }
+            });
         ev.preventDefault();
     };
+
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -30,6 +58,7 @@ export default function SignUp() {
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Full name"
                                     required=""
+                                    ref={nameRef}
                                 />
                             </div>
                             <div>
@@ -46,6 +75,7 @@ export default function SignUp() {
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="name@company.com"
                                     required=""
+                                    ref={emailRef}
                                 />
                             </div>
                             <div>
@@ -62,6 +92,7 @@ export default function SignUp() {
                                     placeholder="Password"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required=""
+                                    ref={passwordRef}
                                 />
                             </div>{" "}
                             <div>
@@ -78,6 +109,7 @@ export default function SignUp() {
                                     placeholder="Password Confirmation"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required=""
+                                    ref={confirmpasswordRef}
                                 />
                             </div>
                             <button
