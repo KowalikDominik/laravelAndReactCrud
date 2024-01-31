@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import api from "api";
+import api from "../api";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export default function SignUp() {
@@ -12,6 +12,8 @@ export default function SignUp() {
     const confirmpasswordRef = useRef("");
 
     const onSubmit = (ev) => {
+        ev.preventDefault();
+
         const payload = {
             name: nameRef.current.value,
             email: emailRef.current.value,
@@ -29,7 +31,6 @@ export default function SignUp() {
                     console.log(response.data.errors);
                 }
             });
-        ev.preventDefault();
     };
 
     return (
