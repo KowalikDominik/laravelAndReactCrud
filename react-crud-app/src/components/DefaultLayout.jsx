@@ -20,9 +20,11 @@ export default function DefaultLayout() {
                     >
                         Admin
                     </Link>
-                    <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                        <i className="fas fa-plus mr-3"></i> New Report
-                    </button>
+                    <Link to="/users/new">
+                        <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                            <i className="fas fa-plus mr-3"></i> New User
+                        </button>
+                    </Link>
                 </div>
                 <Nav mobile={false}>
                     <Nav.NavItem

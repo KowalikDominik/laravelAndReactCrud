@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 export default function Users() {
     const [usersData, setUsersData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    useEffect(() => {
+    const getUsers = () => {
         setIsLoading(true);
         api.get("/users").then(
             ({ data }) => {
@@ -19,6 +19,19 @@ export default function Users() {
             },
             () => setIsLoading(false)
         );
+    };
+    const onDelete = (userId) => () => {
+        if (!window.confirm("Are you sure you want to delete this user?")) {
+            return;
+        }
+        api.delete(`users/${userId}`).then(() => {
+            getUsers();
+            window.alert(`User ${userId} was deleted.`);
+        });
+    };
+
+    useEffect(() => {
+        getUsers();
     }, []);
 
     const users = usersData?.data || [];
@@ -80,7 +93,7 @@ export default function Users() {
                                             >
                                                 <EditIcon />
                                             </Link>
-                                            <button>
+                                            <button onClick={onDelete(user.id)}>
                                                 <TrashIcon />
                                             </button>
                                         </td>
