@@ -6,6 +6,7 @@ import {
     Edit3 as EditIcon,
 } from "react-feather";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Users() {
     const [usersData, setUsersData] = useState({});
@@ -25,8 +26,8 @@ export default function Users() {
             return;
         }
         api.delete(`users/${userId}`).then(() => {
+            toast.success(`User ${userId} was deleted.`);
             getUsers();
-            window.alert(`User ${userId} was deleted.`);
         });
     };
 

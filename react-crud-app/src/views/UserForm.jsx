@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api";
 import SpanError from "../components/SpanError";
+import { toast } from "react-hot-toast";
 
 export default function UserForm() {
     const { id } = useParams();
@@ -20,27 +21,27 @@ export default function UserForm() {
         if (id) {
             api.put(`/users/${user.id}`, user)
                 .then(() => {
-                    window.alert(`User ${user.id} was edited.`);
+                    toast.success(`User ${user.id} was edited.`);
                     navigate("/users");
                 })
                 .catch((err) => {
                     const response = err.response;
                     setErrors(response.data.errors);
                     if (response && response.status === 441) {
-                        console.log(response.data.errors);
+                        console.error(response.data.errors);
                     }
                 });
         } else {
             api.post(`/users`, user)
                 .then(() => {
-                    window.alert(`User ${user.name} was created.`);
+                    toast.success(`User ${user.name} was created.`);
                     navigate("/users");
                 })
                 .catch((err) => {
                     const response = err.response;
                     setErrors(response.data.errors);
                     if (response && response.status === 441) {
-                        console.log(response.data.errors);
+                        console.error(response.data.errors);
                     }
                 });
         }
@@ -62,7 +63,7 @@ export default function UserForm() {
     if (isLoading) {
         return "Loading...";
     }
-    console.log("user", user);
+
     return (
         <div className="w-full sm:max-w-xl">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
