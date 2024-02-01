@@ -1,205 +1,94 @@
+import { useEffect, useState } from "react";
+import api from "../api";
+import {
+    List as ListIcon,
+    Trash2 as TrashIcon,
+    Edit3 as EditIcon,
+} from "react-feather";
+import { Link } from "react-router-dom";
+
 export default function Users() {
+    const [usersData, setUsersData] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        setIsLoading(true);
+        api.get("/users").then(
+            ({ data }) => {
+                setUsersData(data);
+                setIsLoading(false);
+            },
+            () => setIsLoading(false)
+        );
+    }, []);
+
+    const users = usersData?.data || [];
     return (
         <>
             <p className="text-xl pb-3 flex items-center">
-                <i className="fas fa-list mr-3"></i> Latest Reports
+                <ListIcon className="mr-3" />
+                Users List
             </p>
             <div className="bg-white overflow-auto">
                 <table className="min-w-full bg-white">
                     <thead className="bg-gray-800 text-white">
                         <tr>
-                            <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
+                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
+                                ID
+                            </th>
+                            <th className="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">
                                 Name
                             </th>
                             <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                                Last name
-                            </th>
-                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
-                                Phone
-                            </th>
-                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
                                 Email
+                            </th>
+                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
+                                Created at
+                            </th>
+                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
+                                Actions
                             </th>
                         </tr>
                     </thead>
-                    <tbody className="text-gray-700">
-                        <tr>
-                            <td className="w-1/3 text-left py-3 px-4">Lian</td>
-                            <td className="w-1/3 text-left py-3 px-4">Smith</td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="tel:622322662"
-                                >
-                                    622322662
-                                </a>
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="mailto:jonsmith@mail.com"
-                                >
-                                    jonsmith@mail.com
-                                </a>
-                            </td>
-                        </tr>
-                        <tr className="bg-gray-200">
-                            <td className="w-1/3 text-left py-3 px-4">Emma</td>
-                            <td className="w-1/3 text-left py-3 px-4">
-                                Johnson
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="tel:622322662"
-                                >
-                                    622322662
-                                </a>
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="mailto:jonsmith@mail.com"
-                                >
-                                    jonsmith@mail.com
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="w-1/3 text-left py-3 px-4">
-                                Oliver
-                            </td>
-                            <td className="w-1/3 text-left py-3 px-4">
-                                Williams
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="tel:622322662"
-                                >
-                                    622322662
-                                </a>
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="mailto:jonsmith@mail.com"
-                                >
-                                    jonsmith@mail.com
-                                </a>
-                            </td>
-                        </tr>
-                        <tr className="bg-gray-200">
-                            <td className="w-1/3 text-left py-3 px-4">
-                                Isabella
-                            </td>
-                            <td className="w-1/3 text-left py-3 px-4">Brown</td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="tel:622322662"
-                                >
-                                    622322662
-                                </a>
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="mailto:jonsmith@mail.com"
-                                >
-                                    jonsmith@mail.com
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="w-1/3 text-left py-3 px-4">Lian</td>
-                            <td className="w-1/3 text-left py-3 px-4">Smith</td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="tel:622322662"
-                                >
-                                    622322662
-                                </a>
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="mailto:jonsmith@mail.com"
-                                >
-                                    jonsmith@mail.com
-                                </a>
-                            </td>
-                        </tr>
-                        <tr className="bg-gray-200">
-                            <td className="w-1/3 text-left py-3 px-4">Emma</td>
-                            <td className="w-1/3 text-left py-3 px-4">
-                                Johnson
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="tel:622322662"
-                                >
-                                    622322662
-                                </a>
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="mailto:jonsmith@mail.com"
-                                >
-                                    jonsmith@mail.com
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="w-1/3 text-left py-3 px-4">
-                                Oliver
-                            </td>
-                            <td className="w-1/3 text-left py-3 px-4">
-                                Williams
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="tel:622322662"
-                                >
-                                    622322662
-                                </a>
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="mailto:jonsmith@mail.com"
-                                >
-                                    jonsmith@mail.com
-                                </a>
-                            </td>
-                        </tr>
-                        <tr className="bg-gray-200">
-                            <td className="w-1/3 text-left py-3 px-4">
-                                Isabella
-                            </td>
-                            <td className="w-1/3 text-left py-3 px-4">Brown</td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="tel:622322662"
-                                >
-                                    622322662
-                                </a>
-                            </td>
-                            <td className="text-left py-3 px-4">
-                                <a
-                                    className="hover:text-blue-500"
-                                    href="mailto:jonsmith@mail.com"
-                                >
-                                    jonsmith@mail.com
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
+                    {isLoading && (
+                        <tbody>
+                            <tr>
+                                <td colSpan={5}>Loading...</td>
+                            </tr>
+                        </tbody>
+                    )}
+                    {!isLoading && (
+                        <tbody className="text-gray-700">
+                            {users.map((user) => {
+                                return (
+                                    <tr key={user.id}>
+                                        <td className="text-left py-3 px-4">
+                                            {user.id}
+                                        </td>
+                                        <td className="w-1/4 text-left py-3 px-4">
+                                            {user.name}
+                                        </td>
+                                        <td className="w-1/3 text-left py-3 px-4">
+                                            {user.email}
+                                        </td>
+                                        <td className="text-left py-3 px-4">
+                                            {user.created_at}
+                                        </td>
+                                        <td className="text-left py-3 px-4 text-center flex">
+                                            <Link
+                                                to={`/users/${user.id}`}
+                                                className="mr-3"
+                                            >
+                                                <EditIcon />
+                                            </Link>
+                                            <button>
+                                                <TrashIcon />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    )}
                 </table>
             </div>
         </>
