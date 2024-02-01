@@ -11,24 +11,25 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request) {
-        
+    public function login(LoginRequest $request)
+    {
+
         $credentials = $request->validated();
-        
+
         if (!Auth::attempt($credentials)) {
             return response([
                 'message' => 'Provided email or password is incorrect'
-            ]);
+            ], 422);
         }
 
         /** @var User $user */
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
-
     }
-    public function signup(SignupRequest $request) {
-        
+    public function signup(SignupRequest $request)
+    {
+
         $data = $request->validated();
 
         $user = User::create([
@@ -40,11 +41,11 @@ class AuthController extends Controller
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
     }
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         /** @var User $user */
         $user = $request->user();
         $user->tokens()->delete();
         return response('', 204);
-
     }
 }
