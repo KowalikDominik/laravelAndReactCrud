@@ -1,11 +1,12 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 import { useStateContext } from "../contexts/ContextProvider";
+import SpanError from "../components/SpanError";
 
 export default function SignUp() {
     const { setUser, setToken } = useStateContext();
-
+    const [errors, setErrors] = useState(null);
     const nameRef = useRef("");
     const emailRef = useRef("");
     const passwordRef = useRef("");
@@ -18,6 +19,7 @@ export default function SignUp() {
             name: nameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
+            password_confirmation: confirmpasswordRef.current.value,
         };
 
         api.post("/signup", payload)
@@ -27,6 +29,7 @@ export default function SignUp() {
             })
             .catch((err) => {
                 const response = err.response;
+                setErrors(response.data.errors);
                 if (response && response.status === 441) {
                     console.log(response.data.errors);
                 }
@@ -61,6 +64,7 @@ export default function SignUp() {
                                     required=""
                                     ref={nameRef}
                                 />
+                                <SpanError text={errors?.["name"]} />
                             </div>
                             <div>
                                 <label
@@ -78,6 +82,7 @@ export default function SignUp() {
                                     required=""
                                     ref={emailRef}
                                 />
+                                <SpanError text={errors?.["email"]} />{" "}
                             </div>
                             <div>
                                 <label
@@ -95,7 +100,7 @@ export default function SignUp() {
                                     required=""
                                     ref={passwordRef}
                                 />
-                            </div>{" "}
+                            </div>
                             <div>
                                 <label
                                     htmlFor="confirmpassword"
@@ -112,6 +117,7 @@ export default function SignUp() {
                                     required=""
                                     ref={confirmpasswordRef}
                                 />
+                                <SpanError text={errors?.["password"]} />
                             </div>
                             <button
                                 type="submit"
