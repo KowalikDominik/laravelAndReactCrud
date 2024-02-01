@@ -1,7 +1,23 @@
+import { useEffect } from "react";
+import { useStateContext } from "../contexts/ContextProvider";
+import api from "../api";
+
 export default function UserHeaderToolbar() {
+    const { user, setUser, setToken } = useStateContext();
+
     const onLogout = (ev) => {
         ev.preventDefault();
+        api.post("/logout").then(() => {
+            setToken(null);
+            setUser({});
+        });
     };
+
+    useEffect(() => {
+        api.get("/user").then(({ data }) => {
+            setUser(data);
+        });
+    }, [setUser]);
 
     return (
         <header className="w-full items-center bg-white py-2 px-6 hidden sm:flex">
@@ -16,7 +32,7 @@ export default function UserHeaderToolbar() {
                         href="#"
                         className="block bg-gray-200 px-4 py-2 rounded-t-lg"
                     >
-                        Dominik
+                        {user.name}
                     </div>
                     <a
                         href="#"
