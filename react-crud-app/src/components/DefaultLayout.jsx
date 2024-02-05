@@ -4,6 +4,7 @@ import Nav from "./Nav";
 import UserHeaderToolbar from "./UserHeaderToolbar";
 import { Toaster } from "react-hot-toast";
 import { Plus as PlusIcon, Menu as MobileMenuIcon } from "react-feather";
+
 export default function DefaultLayout() {
     const { token } = useStateContext();
 
@@ -54,8 +55,6 @@ export default function DefaultLayout() {
                         {/* TODO Implement mobile menu toogler, change icon backgrount to transparent */}
                         <button className="text-white text-3xl focus:outline-none">
                             <MobileMenuIcon />
-                            <i className="fas fa-bars"></i>
-                            <i className="fas fa-times"></i>
                         </button>
                     </div>
                     <Nav mobile={true}>
@@ -68,14 +67,16 @@ export default function DefaultLayout() {
                             text={"Users"}
                             to={"/users"}
                             iconName={"fa-sticky-note"}
-                        />{" "}
+                        />
+                        {/* TODO implement my account page */}
                         <Nav.MobileNavItem
                             text={"My Account"}
                             to={"/users"}
                             iconName={"fa-sticky-note"}
-                        />{" "}
+                        />
+                        {/* TODO Add here loogout support, it is in UserHeaderToolbar comp. Meybe you need global logout support*/}
                         <Nav.MobileNavItem
-                            text={"Sign Out"}
+                            text={"Logout"}
                             to={"/users"}
                             iconName={"fa-sticky-note"}
                         />
